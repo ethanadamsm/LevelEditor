@@ -3,7 +3,6 @@ require "gosu"
 class Block
 
 	def initialize(type, x, y)
-		puts type
 		@type = type
 		@x = x
 		@y = y
