@@ -4,19 +4,20 @@ require_relative "block"
 class Level < Gosu::Window
 
 	def initialize
-		super(752, 384)
+		lines = File.read("level.txt")
+		lines = lines.split(" ")
+		super(736, 384)
 		@blocks = []
 		x = 0
 		y = 0
-		(0...1128).each do |n|
-			@blocks.push(Block.new(3, x, y))
-			x += 16
-			if x >= 752
+		(0...276).each do |n|
+			@blocks.push(Block.new(lines[n].to_i, x, y))
+			x += 32
+			if x >= 736
 				x = 0
-				y += 16
+				y += 32
 			end
 		end
-		puts @blocks.length
 		@type = 0
 	end
 
@@ -37,6 +38,8 @@ class Level < Gosu::Window
 			@type = 2
 		elsif id == Gosu::Kb3
 			@type = 3
+		elsif id == Gosu::KbS
+			save
 		end
 		@blocks.each do |block|
 			if block.collide?(self.mouse_x, self.mouse_y)
@@ -51,6 +54,28 @@ class Level < Gosu::Window
 		@blocks.each do |block|
 			block.draw
 		end
+	end
+
+	def save
+		line_full = ""
+		(0...276).each do |n|
+			if n == 0
+				if @blocks[n].getType == 0
+					line_full += "0"
+				else
+					line_full += @blocks[0].getType.to_s
+				end
+				
+			else
+				if @blocks[n].getType == 0
+					line_full += " " + "0"
+				else
+					line_full += " " + @blocks[n].getType.to_s
+				end
+			end
+		end
+		puts line_full
+		File.write("level.txt", line_full)
 	end
 
 end
