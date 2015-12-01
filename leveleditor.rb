@@ -42,6 +42,8 @@ class Level < Gosu::Window
 			save
 		elsif id == Gosu::KbC
 			clear
+		elsif id == Gosu::KbR
+			load
 		end
 		@blocks.each do |block|
 			if block.collide?(self.mouse_x, self.mouse_y)
@@ -83,6 +85,14 @@ class Level < Gosu::Window
 	def clear
 		@blocks.each do |block|
 			block.setType(0)
+		end
+	end
+
+	def load
+		lines = File.read("level.txt")
+		lines = lines.split(" ")
+		(0...276).each do |n|
+			@blocks[n].setType(lines[n].to_i)
 		end
 	end
 
