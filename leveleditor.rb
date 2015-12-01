@@ -40,6 +40,8 @@ class Level < Gosu::Window
 			@type = 3
 		elsif id == Gosu::KbS
 			save
+		elsif id == Gosu::KbC
+			clear
 		end
 		@blocks.each do |block|
 			if block.collide?(self.mouse_x, self.mouse_y)
@@ -76,6 +78,12 @@ class Level < Gosu::Window
 		end
 		puts line_full
 		File.write("level.txt", line_full)
+	end
+
+	def clear
+		@blocks.each do |block|
+			block.setType(0)
+		end
 	end
 
 end
