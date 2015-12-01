@@ -3,6 +3,7 @@ require "gosu"
 class Block
 
 	def initialize(type, x, y)
+		puts type
 		@type = type
 		@x = x
 		@y = y
@@ -47,7 +48,7 @@ class Block
 	end
 
 	def collide?(x, y)
-		if x > @x && x < @x + 16 && y > @y && y < @y + 16
+		if x > @x && x < @x + 32 && y > @y && y < @y + 32
 			true
 		end
 	end
